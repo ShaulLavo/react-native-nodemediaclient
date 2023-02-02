@@ -43,6 +43,7 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
     private boolean videoFrontMirror = false;
 
     private boolean denoise = false;
+    private boolean dynamicRateEnable = true;
     private int smoothSkinLevel = 0;
     private float zoomScale = 0;
 
@@ -96,6 +97,11 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
 
     public void setDenoise(boolean denoise) {
         this.denoise = denoise;
+    }
+
+    public void setDynamicRateEnable(boolean dynamicRateEnable) {
+        this.dynamicRateEnable = dynamicRateEnable;
+        mNodePublisher.setDynamicRateEnable(dynamicRateEnable);
     }
 
     public void setSmoothSkinLevel(int smoothSkinLevel) {

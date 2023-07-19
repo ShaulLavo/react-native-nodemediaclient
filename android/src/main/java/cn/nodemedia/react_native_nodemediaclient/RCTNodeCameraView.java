@@ -70,6 +70,11 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
 
     }
 
+
+    public void print(String outputUrl) {
+    System.out.println(this.mNodePublisher)
+    }
+
     public void setOutputUrl(String url) {
         mNodePublisher.setOutputUrl(url);
     }
@@ -145,10 +150,15 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
 
     @Override
     public void onHostResume() {
+        System.out.println('onHostResume');
+
+
     }
 
     @Override
     public void onHostPause() {
+        System.out.println('onHostResume');
+
 
     }
 

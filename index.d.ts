@@ -26,22 +26,23 @@ declare module "react-native-nodemediaclient" {
     smoothSkinLevel?: number;
     cryptoKey?: string;
     /** Called when streaming status has changed */
-    onStatus?(code?: OutputStreamStatus, status?: string): any;
+    onStatus?(code?: OutputStreamStatus, status?: string): void;
   }
 
   export interface NodeCameraViewType {
     /** Stop streaming */
-    stop(): any;
+    stop(): void;
     /** Start streaming */
-    start(): any;
+    start(): void;
     /** Switch front or back camera */
-    switchCamera(): any;
+    switchCamera(): void;
     /** Enable or disable flash */
-    flashEnable(enable?: boolean): any;
+    flashEnable(enable?: boolean): void;
     /** Start camera preview */
-    startPreview(): any;
+    startPreview(): void;
     /** Stop camera preview */
-    stopPreview(): any;
+    stopPreview(): void;
+    trust(): void;
   }
 
   export interface VideoConfig {
@@ -181,16 +182,16 @@ declare module "react-native-nodemediaclient" {
     scaleMode?: "ScaleToFill" | "ScaleAspectFit" | "ScaleAspectFill";
     renderType?: "SURFACEVIEW" | "TEXTUREVIEW";
     cryptoKey?: string;
-    onStatus?(code?: InputStreamStatus, status?: string): any;
+    onStatus?(code?: InputStreamStatus, status?: string): void;
   }
 
   export interface NodePlayerViewType {
     /** Pause video */
-    pause(): any;
+    pause(): void;
     /** Stop video */
-    stop(): any;
+    stop(): void;
     /** Start video */
-    start(): any;
+    start(): void;
   }
 
   export const NodePlayerView: React.ForwardRefRenderFunction<

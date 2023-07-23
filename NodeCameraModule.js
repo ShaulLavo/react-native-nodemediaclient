@@ -90,9 +90,10 @@ const NodeCameraView = (props, ref) => {
       flashEnable,
       startPreview,
       stopPreview,
-      trust
+      trust,
+      get
     }),
-    [switchCamera, stop, start, flashEnable, startPreview, stopPreview]
+    [switchCamera, stop, start, flashEnable, startPreview, stopPreview, get]
   );
 
   React.useEffect(() => {

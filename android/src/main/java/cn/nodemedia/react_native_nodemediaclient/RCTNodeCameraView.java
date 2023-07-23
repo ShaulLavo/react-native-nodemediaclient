@@ -72,7 +72,7 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
 
 
     public void print(String outputUrl) {
-    System.out.println(this.mNodePublisher)
+    System.out.println(this.mNodePublisher);
     }
 
     public void setOutputUrl(String url) {
@@ -168,7 +168,7 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
         mNodePublisher.stop();
     }
 
-    void setupLayoutHack() {
+    void setupLayoutHack() { 
         Choreographer.getInstance().postFrameCallback(new Choreographer.FrameCallback() {
             @Override
             public void doFrame(long frameTimeNanos) {

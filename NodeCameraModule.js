@@ -17,6 +17,17 @@ const NodeCameraView = (props, ref) => {
     console.log('findNodeHandle(videoRef.current)', findNodeHandle(videoRef.current));
     console.log('Commands', UIManager.getViewManagerConfig("RCTNodeCamera")?.Commands);
   };
+  const get = () => {
+    let a, b;
+    if (videoRef.current)
+      a = UIManager.dispatchViewManagerCommand(
+        findNodeHandle(videoRef.current),
+        b = UIManager.getViewManagerConfig("RCTNodeCamera")?.Commands?.get,
+        null
+      );
+    console.log('a', a);
+    console.log('b', b);
+  };
   const switchCamera = () => {
     if (videoRef.current)
       UIManager.dispatchViewManagerCommand(

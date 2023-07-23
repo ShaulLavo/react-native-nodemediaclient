@@ -71,8 +71,8 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
     }
 
 
-    public void print(String outputUrl) {
-    System.out.println(mNodePublisher);
+    public void get(String outputUrl) {
+    return mNodePublisher;
     }
 
     public void setOutputUrl(String url) {
@@ -145,7 +145,6 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
         if(cameraId >=0) {
             this.startPrev();
         }
-
     }
 
     @Override

@@ -71,7 +71,7 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
     }
 
 
-    public void get(String outputUrl) {
+    public NodePublisher get(String outputUrl) {
     return mNodePublisher;
     }
 

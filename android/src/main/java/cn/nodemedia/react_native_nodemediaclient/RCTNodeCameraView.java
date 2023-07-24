@@ -72,8 +72,10 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
     }
 
 
-      public ReadableMap get() {
-        return mNodePublisher;
+   
+    public ReadableMap get() {
+        ReadableMap obj = mNodePublisher;
+        return obj;
     }
 
     public String getString() {

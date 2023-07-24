@@ -81,6 +81,16 @@ const NodeCameraView = (props, ref) => {
         null
       );
   };
+
+  const capturePicture = () => {
+    if (videoRef.current)
+      UIManager.dispatchViewManagerCommand(
+        findNodeHandle(videoRef.current),
+        UIManager.getViewManagerConfig("RCTNodeCamera")?.Commands?.capturePicture,
+        null
+      );
+  };
+
   React.useImperativeHandle(
     ref,
     () => ({
@@ -91,7 +101,8 @@ const NodeCameraView = (props, ref) => {
       startPreview,
       stopPreview,
       trust,
-      get
+      get,
+      capturePicture
     }),
     [switchCamera, stop, start, flashEnable, startPreview, stopPreview, get]
   );

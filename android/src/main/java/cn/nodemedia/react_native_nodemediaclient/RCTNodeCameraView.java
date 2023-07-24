@@ -7,9 +7,14 @@
 
 package cn.nodemedia.react_native_nodemediaclient;
 
+import java.io.ByteArrayOutputStream;
+
+
 import android.util.Log;
+import android.util.Base64;
 import android.view.Choreographer;
 import android.view.View;
+import android.graphics.Bitmap;
 
 import androidx.annotation.NonNull;
 
@@ -20,6 +25,7 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 import cn.nodemedia.NodeCameraView;
 import cn.nodemedia.NodePublisher;
@@ -47,36 +53,27 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
     private boolean dynamicRateEnable = true;
     private int smoothSkinLevel = 0;
     private float zoomScale = 0;
+    
 
+    public void capturePicture() {
+    mNodePublisher.capturePicture(new NodePublisher.CapturePictureListener() {
+        @Override
+        public void onCaptureCallback(Bitmap picture) {
+            // Convert Bitmap to Base64
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            picture.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            byte[] byteArray = byteArrayOutputStream.toByteArray();
+            String base64Picture = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
-    public RCTNodeCameraView(@NonNull ThemedReactContext context) {
-        super(context);
-        setupLayoutHack();
-        context.addLifecycleEventListener(this);
-
-        mNodePublisher = new NodePublisher(context, RCTNodeMediaClient.getLicense());
-        mNodePublisher.setNodePublisherDelegate(new NodePublisherDelegate() {
-            @Override
-            public void onEventCallback(NodePublisher nodePublisher, int i, String s) {
-                WritableMap event = Arguments.createMap();
-                event.putInt("code", i);
-                event.putString("msg", s);
-                ReactContext reactContext = (ReactContext) getContext();
-                reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
-                        getId(),
-                        "topChange",
-                        event);
-            }
-        });
-
-    }
-
-
-   
-    public ReadableMap get() {
-        ReadableMap obj = mNodePublisher;
-        return obj;
-    }
+            // Emit event to JavaScript
+            WritableMap event = Arguments.createMap();
+            event.putString("picture", base64Picture);
+            mReactContext
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit("onPictureCaptured", event);
+        }
+    });
+}
 
     public String getString() {
         return "Test";

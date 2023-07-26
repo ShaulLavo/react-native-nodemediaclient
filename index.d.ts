@@ -1,8 +1,8 @@
 declare module "react-native-nodemediaclient" {
   import type * as React from "react";
-  import { ViewProps } from "react-native";
+  import { View } from "react-native";
 
-  export interface NodeCameraViewProps extends ViewProps {
+  export interface NodeCameraViewProps extends View {
     ref?: (ref: NodeCameraViewType) => any;
     /**
      * RTMP endpoint
@@ -178,7 +178,7 @@ declare module "react-native-nodemediaclient" {
     None = 0,
   }
 
-  export interface NodePlayerViewProps extends ViewProps {
+  export interface NodePlayerViewProps extends View {
     ref: any;
     inputUrl: string;
     bufferTime?: number;

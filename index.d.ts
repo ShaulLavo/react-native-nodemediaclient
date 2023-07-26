@@ -1,8 +1,8 @@
 declare module "react-native-nodemediaclient" {
   import type * as React from "react";
-  import { View } from "react-native";
+  import { View, ViewProps } from "react-native";
 
-  export interface NodeCameraViewProps extends View {
+  export interface NodeCameraViewProps extends ViewProps {
     ref?: (ref: NodeCameraViewType) => any;
     /**
      * RTMP endpoint
@@ -28,13 +28,13 @@ declare module "react-native-nodemediaclient" {
     /** Called when streaming status has changed */
     onStatus?(code?: OutputStreamStatus, status?: string): void;
     /** 
- * @max range 0.0 - 1.0
+ * @range 0.0 - 1.0
  */
     zoomScale?: number;
 
   }
 
-  export interface NodeCameraViewType {
+  export interface NodeCameraViewType extends View {
     /** Stop streaming */
     stop(): void;
     /** Start streaming */
@@ -178,7 +178,7 @@ declare module "react-native-nodemediaclient" {
     None = 0,
   }
 
-  export interface NodePlayerViewProps extends View {
+  export interface NodePlayerViewProps extends ViewProps {
     ref: any;
     inputUrl: string;
     bufferTime?: number;
@@ -191,7 +191,7 @@ declare module "react-native-nodemediaclient" {
     onStatus?(code?: InputStreamStatus, status?: string): void;
   }
 
-  export interface NodePlayerViewType {
+  export interface NodePlayerViewType extends View {
     /** Pause video */
     pause(): void;
     /** Stop video */

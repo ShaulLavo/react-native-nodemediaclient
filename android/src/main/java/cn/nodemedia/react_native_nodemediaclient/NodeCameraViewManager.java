@@ -121,9 +121,8 @@ public class NodeCameraViewManager extends ViewGroupManager<RCTNodeCameraView> {
     public Map<String, Integer> getCommandsMap() {
         return MapBuilder.of(COMMAND_STARTPREV_NAME, COMMAND_STARTPREV_ID, COMMAND_STOPPREV_NAME, COMMAND_STOPPREV_ID,
                 COMMAND_START_NAME, COMMAND_START_ID, COMMAND_STOP_NAME, COMMAND_STOP_ID, COMMAND_SWITCH_CAM_NAME,
-                COMMAND_SWITCH_CAM_ID, COMMAND_SWITCH_FLASH_NAME, COMMAND_SWITCH_FLASH_ID,
+                COMMAND_SWITCH_CAM_ID, COMMAND_SWITCH_FLASH_NAME, COMMAND_SWITCH_FLASH_ID);
                 //  COMMAND_CAPTURE_PICTURE_NAME, COMMAND_CAPTURE_PICTURE_ID,
-                 );
     }
 
     @Override

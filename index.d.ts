@@ -184,6 +184,7 @@ declare module "react-native-nodemediaclient" {
     renderType?: "SURFACEVIEW" | "TEXTUREVIEW";
     cryptoKey?: string;
     onStatus?(code?: InputStreamStatus, status?: string): void;
+    zoomScale?: number;
   }
 
   export interface NodePlayerViewType {

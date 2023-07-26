@@ -27,6 +27,11 @@ declare module "react-native-nodemediaclient" {
     cryptoKey?: string;
     /** Called when streaming status has changed */
     onStatus?(code?: OutputStreamStatus, status?: string): void;
+    /** 
+ * @max range 0.0 - 1.0
+ */
+    zoomScale?: number;
+
   }
 
   export interface NodeCameraViewType {
@@ -184,7 +189,6 @@ declare module "react-native-nodemediaclient" {
     renderType?: "SURFACEVIEW" | "TEXTUREVIEW";
     cryptoKey?: string;
     onStatus?(code?: InputStreamStatus, status?: string): void;
-    zoomScale?: number;
   }
 
   export interface NodePlayerViewType {

@@ -55,25 +55,25 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
     private float zoomScale = 0;
     
 
-    public void capturePicture() {
-    mNodePublisher.capturePicture(new NodePublisher.CapturePictureListener() {
-        @Override
-        public void onCaptureCallback(Bitmap picture) {
-            // Convert Bitmap to Base64
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            picture.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-            byte[] byteArray = byteArrayOutputStream.toByteArray();
-            String base64Picture = Base64.encodeToString(byteArray, Base64.DEFAULT);
+    // public void capturePicture() {
+//     mNodePublisher.capturePicture(new NodePublisher.CapturePictureListener() {
+//         @Override
+//         public void onCaptureCallback(Bitmap picture) {
+//             // Convert Bitmap to Base64
+//             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//             picture.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+//             byte[] byteArray = byteArrayOutputStream.toByteArray();
+//             String base64Picture = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
-            // Emit event to JavaScript
-            WritableMap event = Arguments.createMap();
-            event.putString("picture", base64Picture);
-            mReactContext
-                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                .emit("onPictureCaptured", event);
-        }
-    });
-}
+//             // Emit event to JavaScript
+//             WritableMap event = Arguments.createMap();
+//             event.putString("picture", base64Picture);
+//             mReactContext
+//                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+//                 .emit("onPictureCaptured", event);
+//         }
+//     });
+// }
 
 
     public void setOutputUrl(String url) {

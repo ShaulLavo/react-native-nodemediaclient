@@ -82,14 +82,14 @@ const NodeCameraView = (props, ref) => {
       );
   };
 
-  const capturePicture = () => {
-    if (videoRef.current)
-      UIManager.dispatchViewManagerCommand(
-        findNodeHandle(videoRef.current),
-        UIManager.getViewManagerConfig("RCTNodeCamera")?.Commands?.capturePicture,
-        null
-      );
-  };
+  // const capturePicture = () => {
+  //   if (videoRef.current)
+  //     UIManager.dispatchViewManagerCommand(
+  //       findNodeHandle(videoRef.current),
+  //       UIManager.getViewManagerConfig("RCTNodeCamera")?.Commands?.capturePicture,
+  //       null
+  //     );
+  // };
 
   React.useImperativeHandle(
     ref,

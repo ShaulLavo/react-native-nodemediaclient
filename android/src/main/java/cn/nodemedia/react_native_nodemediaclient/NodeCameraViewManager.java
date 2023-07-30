@@ -54,6 +54,7 @@ public class NodeCameraViewManager extends ViewGroupManager<RCTNodeCameraView> {
     @Override
     protected RCTNodeCameraView createViewInstance(ThemedReactContext reactContext) {
         RCTNodeCameraView view = new RCTNodeCameraView(reactContext);
+        view.doStuff(); 
         return view;
     }
 
@@ -141,6 +142,7 @@ public class NodeCameraViewManager extends ViewGroupManager<RCTNodeCameraView> {
             case COMMAND_SWITCH_FLASH_ID:
                 root.setFlashEnable(args.getBoolean(0));
                 break;
+                
         }
     }
 }

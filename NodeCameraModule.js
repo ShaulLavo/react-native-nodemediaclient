@@ -102,10 +102,9 @@ const NodeCameraView = (props, ref) => {
       stopPreview,
       trust,
       get,
-      capturePicture,
-      props //props is used for debugging
+      // capturePicture,
     }),
-    [switchCamera, stop, start, flashEnable, startPreview, stopPreview, get, props]
+    [switchCamera, stop, start, flashEnable, startPreview, stopPreview, get]
   );
 
   React.useEffect(() => {
@@ -114,7 +113,7 @@ const NodeCameraView = (props, ref) => {
       console.log("stopping camera on unmount");
     };
   }, []);
-
+  console.log(props);
   return <RCTNodeCamera {...props} ref={videoRef} onChange={_onChange} />;
 };
 

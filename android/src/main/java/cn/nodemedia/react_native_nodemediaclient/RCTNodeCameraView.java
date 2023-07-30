@@ -142,6 +142,10 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
         }
 
     }
+    public void doStuff(){
+    Log.d("RCTNodeCameraView", "doStuff");
+    Log.d("RCTNodeCameraView", mNodePublisher.toString());
+    }
 
     @Override
     public void onHostResume() {

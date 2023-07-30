@@ -102,9 +102,10 @@ const NodeCameraView = (props, ref) => {
       stopPreview,
       trust,
       get,
-      capturePicture
+      capturePicture,
+      props //props is used for debugging
     }),
-    [switchCamera, stop, start, flashEnable, startPreview, stopPreview, get]
+    [switchCamera, stop, start, flashEnable, startPreview, stopPreview, get, props]
   );
 
   React.useEffect(() => {

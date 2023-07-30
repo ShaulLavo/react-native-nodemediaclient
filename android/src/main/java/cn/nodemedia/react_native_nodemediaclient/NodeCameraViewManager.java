@@ -34,6 +34,9 @@ public class NodeCameraViewManager extends ViewGroupManager<RCTNodeCameraView> {
     private static final String COMMAND_SWITCH_CAM_NAME = "switchCamera";
     private static final int COMMAND_SWITCH_FLASH_ID = 5;
     private static final String COMMAND_SWITCH_FLASH_NAME = "flashEnable";
+    private static final int COMMAND_DOSTUFF_ID = 6;
+    private static final String COMMAND_DOSTUFF_NAME = "doStuff";
+    
     @Override
     public String getName() {
         return "RCTNodeCamera";

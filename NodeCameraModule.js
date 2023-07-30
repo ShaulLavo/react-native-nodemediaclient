@@ -81,6 +81,14 @@ const NodeCameraView = (props, ref) => {
         null
       );
   };
+  const doStuff = () => {
+    if (videoRef.current)
+      UIManager.dispatchViewManagerCommand(
+        findNodeHandle(videoRef.current),
+        UIManager.getViewManagerConfig("RCTNodeCamera")?.Commands?.doStuff,
+        null
+      );
+  };
 
   // const capturePicture = () => {
   //   if (videoRef.current)
@@ -104,7 +112,7 @@ const NodeCameraView = (props, ref) => {
       get,
       // capturePicture,
     }),
-    [switchCamera, stop, start, flashEnable, startPreview, stopPreview, get]
+    [switchCamera, stop, start, flashEnable, startPreview, stopPreview, get, doStuff]
   );
 
   React.useEffect(() => {

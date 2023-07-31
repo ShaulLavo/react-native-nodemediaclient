@@ -20,10 +20,19 @@ const NodeCameraView = (props, ref) => {
   };
 
   useEffect(() => {
-    const doStuffListener = DeviceEventEmitter.addListener('doStuffEvent', (event) => {
-      console.log('event', event); // This will log the result sent from doStuff method
-    });
-    return () => { doStuffListener.remove(); };
+    console.log('Adding listener for doStuffEvent'); // Log when adding the listener
+
+    const handleDoStuffEvent = (event) => {
+      console.log('doStuffEvent received', event); // Log when the event is received
+      console.log('Result from doStuff:', event.result); // Log the result from doStuff
+    };
+
+    const listener = DeviceEventEmitter.addListener('doStuffEvent', handleDoStuffEvent);
+
+    return () => {
+      console.log('Removing listener for doStuffEvent'); // Log when removing the listener
+      listener.remove();
+    };
   }, []);
 
   const _onChange = (event) => {

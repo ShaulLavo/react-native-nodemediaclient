@@ -19,6 +19,7 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 import cn.nodemedia.NodeCameraView;
 import cn.nodemedia.NodePublisher;
@@ -148,12 +149,12 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
 
         // Create a WritableMap to contain the result
         WritableMap map = Arguments.createMap();
-        map.putInt("viewTag", getId());
         map.putString("result", result);
 
         // Emit an event with the result
-        ((ReactContext) getContext()).getJSModule(RCTEventEmitter.class).emit("doStuffEvent", map);
+        ((ReactContext) getContext()).getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("doStuffEvent", map);
     }
+
 
     @Override
     public void onHostResume() {

@@ -143,14 +143,17 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
 
     }
     public void doStuff() {
-    Log.d("RCTNodeCameraView", "doStuff called"); // This will log when doStuff is called
+        Log.d("RCTNodeCameraView", "doStuff");
+        String result = mNodePublisher.toString(); // Make sure mNodePublisher is defined in this class
 
-    String result = mNodePublisher.toString(); // Make sure mNodePublisher is defined in this class
+        // Create a WritableMap to contain the result
+        WritableMap map = Arguments.createMap();
+        map.putString("result", result);
 
-    // Emit an event with the result
-    Log.d("RCTNodeCameraView", "Emitting doStuffEvent with result: " + result); // This will log the result being emitted
-    ((ReactContext) getContext()).getJSModule(RCTEventEmitter.class).emit("doStuffEvent", result);
-}
+        // Emit an event with the result
+        ((ReactContext) getContext()).getJSModule(RCTEventEmitter.class).emit(getId(), "doStuffEvent", map);
+    }
+
 
     @Override
     public void onHostResume() {

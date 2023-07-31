@@ -2,11 +2,21 @@ import React from "react";
 import {
   UIManager,
   findNodeHandle,
-  requireNativeComponent
+  requireNativeComponent,
+  NativeEventEmitter
 } from "react-native";
-
+import { useEffect } from "react";
 const NodeCameraView = (props, ref) => {
   const videoRef = React.useRef();
+
+
+  const eventEmitter = new NativeEventEmitter(NativeModules.RCTNodeCameraModule);
+
+  useEffect(() => {
+    const doStuffListener = eventEmitter.addListener('doStuffEvent', (event) => {
+      console.log('event', event.result); // This will log the result sent from doStuff method
+    });
+  }, []);
   const _onChange = (event) => {
     if (!props.onStatus) {
       return;

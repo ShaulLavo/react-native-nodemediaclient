@@ -21,6 +21,9 @@ import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
+import com.google.gson.Gson;
+
+
 import cn.nodemedia.NodeCameraView;
 import cn.nodemedia.NodePublisher;
 import cn.nodemedia.NodePublisherDelegate;
@@ -143,17 +146,20 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
         }
 
     }
-    public void doStuff() {
-        Log.d("RCTNodeCameraView", "doStuff");
-        String result = mNodePublisher.toString(); // Make sure mNodePublisher is defined in this class
+public void doStuff() {
+    Log.d("RCTNodeCameraView", "doStuff");
 
-        // Create a WritableMap to contain the result
-        WritableMap map = Arguments.createMap();
-        map.putString("result", result);
+    // Convert mNodePublisher to a JSON string
+    Gson gson = new Gson();
+    String result = gson.toJson(mNodePublisher);
 
-        // Emit an event with the result
-        ((ReactContext) getContext()).getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("doStuffEvent", map);
-    }
+    // Create a WritableMap to contain the result
+    WritableMap map = Arguments.createMap();
+    map.putString("result", result);
+
+    // Emit an event with the result
+    ((ReactContext) getContext()).getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("doStuffEvent", map);
+}
 
 
     @Override
@@ -190,4 +196,6 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
             child.layout(0, 0, child.getMeasuredWidth(), child.getMeasuredHeight());
         }
     }
+
+
 }

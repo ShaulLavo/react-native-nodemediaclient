@@ -148,12 +148,12 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
 
         // Create a WritableMap to contain the result
         WritableMap map = Arguments.createMap();
+        map.putInt("viewTag", getId());
         map.putString("result", result);
 
         // Emit an event with the result
-        ((ReactContext) getContext()).getJSModule(RCTEventEmitter.class).emit(getId(), "doStuffEvent", map);
+        ((ReactContext) getContext()).getJSModule(RCTEventEmitter.class).emit("doStuffEvent", map);
     }
-
 
     @Override
     public void onHostResume() {

@@ -3,20 +3,25 @@ import {
   UIManager,
   findNodeHandle,
   requireNativeComponent,
-  NativeEventEmitter,
-  NativeModules
+  DeviceEventEmitter
 } from "react-native";
 import { useEffect } from "react";
 const NodeCameraView = (props, ref) => {
   const videoRef = React.useRef();
 
 
-  const eventEmitter = new NativeEventEmitter(NativeModules.RCTNodeCameraModule);
+  const doStuff = () => {
+    if (videoRef.current)
+      UIManager.dispatchViewManagerCommand(
+        findNodeHandle(videoRef.current),
+        UIManager.getViewManagerConfig("RCTNodeCamera")?.Commands?.doStuff,
+        null
+      );
+  };
+
   useEffect(() => {
-    console.log('eventEmitter', eventEmitter);
-    console.log('Setting up doStuffEvent listener'); // This will log when the event listener is set up
-    const doStuffListener = eventEmitter.addListener('doStuffEvent', (event) => {
-      console.log('doStuffEvent received', event); // This will log when doStuffEvent is received
+    const doStuffListener = DeviceEventEmitter.addListener('doStuffEvent', (event) => {
+      console.log('event', event); // This will log the result sent from doStuff method
     });
     return () => { doStuffListener.remove(); };
   }, []);
@@ -95,14 +100,8 @@ const NodeCameraView = (props, ref) => {
         null
       );
   };
-  const doStuff = () => {
-    if (videoRef.current)
-      UIManager.dispatchViewManagerCommand(
-        findNodeHandle(videoRef.current),
-        UIManager.getViewManagerConfig("RCTNodeCamera")?.Commands?.doStuff,
-        null
-      );
-  };
+
+
 
   // const capturePicture = () => {
   //   if (videoRef.current)

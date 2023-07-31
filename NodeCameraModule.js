@@ -3,7 +3,8 @@ import {
   UIManager,
   findNodeHandle,
   requireNativeComponent,
-  NativeEventEmitter
+  NativeEventEmitter,
+  NativeModules
 } from "react-native";
 import { useEffect } from "react";
 const NodeCameraView = (props, ref) => {
@@ -16,6 +17,7 @@ const NodeCameraView = (props, ref) => {
     const doStuffListener = eventEmitter.addListener('doStuffEvent', (event) => {
       console.log('event', event.result); // This will log the result sent from doStuff method
     });
+    return () => { doStuffListener.remove(); };
   }, []);
   const _onChange = (event) => {
     if (!props.onStatus) {

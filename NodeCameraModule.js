@@ -12,13 +12,15 @@ const NodeCameraView = (props, ref) => {
 
 
   const eventEmitter = new NativeEventEmitter(NativeModules.RCTNodeCameraModule);
-
   useEffect(() => {
+    console.log('eventEmitter', eventEmitter);
+    console.log('Setting up doStuffEvent listener'); // This will log when the event listener is set up
     const doStuffListener = eventEmitter.addListener('doStuffEvent', (event) => {
-      console.log('event', event.result); // This will log the result sent from doStuff method
+      console.log('doStuffEvent received', event); // This will log when doStuffEvent is received
     });
     return () => { doStuffListener.remove(); };
   }, []);
+
   const _onChange = (event) => {
     if (!props.onStatus) {
       return;

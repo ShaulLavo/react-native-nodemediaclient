@@ -132,6 +132,7 @@ const NodeCameraView = (props, ref) => {
       stopPreview,
       trust,
       get,
+      doStuff
       // capturePicture,
     }),
     [switchCamera, stop, start, flashEnable, startPreview, stopPreview, get, doStuff]

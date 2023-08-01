@@ -94,7 +94,7 @@ public void takePhoto(final String fileName) {
                 event.putInt("height", bitmap.getHeight());
                 Log.d("RCTNodeCameraView", "TakePhoto4");
                 ((ThemedReactContext) getContext()).getJSModule(RCTEventEmitter.class).receiveEvent(getId(), "onPictureTaken", event);
-                Log.d("RCTNodeCameraView", "TakePhoto4");
+                Log.d("RCTNodeCameraView", "TakePhoto5");
             }
             
             @Override

@@ -28,6 +28,7 @@ import cn.nodemedia.NodeCameraView;
 import cn.nodemedia.NodePublisher;
 import cn.nodemedia.NodePublisherDelegate;
 
+import java.lang.reflect.Field;
 
 public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventListener {
     private NodePublisher mNodePublisher;

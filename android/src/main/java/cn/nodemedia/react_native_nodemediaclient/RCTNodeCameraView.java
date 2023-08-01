@@ -75,6 +75,32 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
 
     }
 
+    public void takePhoto(final String fileName) {
+        Log.d("RCTNodeCameraView", "TakePhoto");
+        if (textureView.isAvailable() && cameraPublisher != null) {
+            Log.d("RCTNodeCameraView", "TakePhoto2");
+        cameraPublisher.captureFrame(fileName, new NodePublisher.CaptureFrameCallback() {
+            Log.d("RCTNodeCameraView", "TakePhoto3");
+            @Override
+            public void onSuccess(Bitmap bitmap) {
+            WritableMap event = Arguments.createMap();
+            event.putString("fileName", fileName);
+            event.putInt("width", bitmap.getWidth());
+            event.putInt("height", bitmap.getHeight());
+            Log.d("RCTNodeCameraView", "TakePhoto4");
+            ((ThemedReactContext) getContext()).getJSModule(RCTEventEmitter.class).receiveEvent(getId(), "onPictureTaken", event);
+            Log.d("RCTNodeCameraView", "TakePhoto4");
+            }
+            
+            @Override
+            public void onError(String error) {
+            Log.d("RCTNodeCameraView", error);
+            }
+        });
+        }
+    }
+  
+
     public void setOutputUrl(String url) {
         mNodePublisher.setOutputUrl(url);
     }
@@ -145,7 +171,6 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
         if(cameraId >=0) {
             this.startPrev();
         }
-
     }
 
 
@@ -177,7 +202,7 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
         ((ReactContext) getContext()).getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("doStuffEvent", map);
     }
 
-    
+
     @Override
     public void onHostResume() {
     }

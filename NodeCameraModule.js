@@ -110,16 +110,14 @@ const NodeCameraView = (props, ref) => {
       );
   };
 
-
-
-  // const capturePicture = () => {
-  //   if (videoRef.current)
-  //     UIManager.dispatchViewManagerCommand(
-  //       findNodeHandle(videoRef.current),
-  //       UIManager.getViewManagerConfig("RCTNodeCamera")?.Commands?.capturePicture,
-  //       null
-  //     );
-  // };
+  takePhoto = () => {
+    const fileName = 'photo.jpg';
+    UIManager.dispatchViewManagerCommand(
+      findNodeHandle(this.cameraRef),
+      UIManager.getViewManagerConfig('RCTNodeCamera').Commands.takePhoto,
+      [fileName],
+    );
+  };
 
   React.useImperativeHandle(
     ref,
@@ -132,10 +130,10 @@ const NodeCameraView = (props, ref) => {
       stopPreview,
       trust,
       get,
-      doStuff
-      // capturePicture,
+      doStuff,
+      takePhoto
     }),
-    [switchCamera, stop, start, flashEnable, startPreview, stopPreview, get, doStuff]
+    [switchCamera, stop, start, flashEnable, startPreview, stopPreview, get, doStuff, takePhoto]
   );
 
   React.useEffect(() => {
@@ -144,7 +142,7 @@ const NodeCameraView = (props, ref) => {
       console.log("stopping camera on unmount");
     };
   }, []);
-  console.log(props);
+  console.log('props', props);
   return <RCTNodeCamera {...props} ref={videoRef} onChange={_onChange} />;
 };
 

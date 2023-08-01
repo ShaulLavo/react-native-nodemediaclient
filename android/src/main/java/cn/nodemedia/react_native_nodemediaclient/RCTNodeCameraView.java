@@ -146,22 +146,37 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
         }
 
     }
-public void doStuff() {
-    Log.d("RCTNodeCameraView", "doStuff");
 
-    // Convert mNodePublisher to a JSON string
-    Gson gson = new Gson();
-    String result = gson.toJson(mNodePublisher);
 
-    // Create a WritableMap to contain the result
-    WritableMap map = Arguments.createMap();
-    map.putString("result", result);
-
-    // Emit an event with the result
-    ((ReactContext) getContext()).getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("doStuffEvent", map);
+    public void printFields(Object obj) {
+    Class<?> objClass = obj.getClass();
+    Field[] fields = objClass.getDeclaredFields();
+    for (Field field : fields) {
+        field.setAccessible(true); // You might need this if fields are private
+        Object value;
+        try {
+            value = field.get(obj);
+        } catch (IllegalAccessException e) {
+            value = e.getMessage();
+        }
+        Log.d("Reflection", "Field: " + field.getName() + ", Value: " + value);
+    }
 }
 
+    public void doStuff() {
+        Log.d("RCTNodeCameraView", "doStuff");
+        String result = mNodePublisher.toString(); // Make sure mNodePublisher is defined in this class
+        
+        // Create a WritableMap to contain the result
+        WritableMap map = Arguments.createMap();
+        map.putString("result", result);
+        printFields(mNodePublisher);
 
+        // Emit an event with the result
+        ((ReactContext) getContext()).getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit("doStuffEvent", map);
+    }
+
+    
     @Override
     public void onHostResume() {
     }

@@ -75,30 +75,35 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
 
     }
 
-    public void takePhoto(final String fileName) {
-        Log.d("RCTNodeCameraView", "TakePhoto");
-        if (textureView.isAvailable() && cameraPublisher != null) {
-            Log.d("RCTNodeCameraView", "TakePhoto2");
+
+It seems you are trying to log some data in the wrong place of the code. Logs should be inside the method, not in the interface declaration. Here is the correct code:
+
+java
+Copy code
+public void takePhoto(final String fileName) {
+    Log.d("RCTNodeCameraView", "TakePhoto");
+    if (textureView.isAvailable() && cameraPublisher != null) {
+        Log.d("RCTNodeCameraView", "TakePhoto2");
         cameraPublisher.captureFrame(fileName, new NodePublisher.CaptureFrameCallback() {
-            Log.d("RCTNodeCameraView", "TakePhoto3");
             @Override
             public void onSuccess(Bitmap bitmap) {
-            WritableMap event = Arguments.createMap();
-            event.putString("fileName", fileName);
-            event.putInt("width", bitmap.getWidth());
-            event.putInt("height", bitmap.getHeight());
-            Log.d("RCTNodeCameraView", "TakePhoto4");
-            ((ThemedReactContext) getContext()).getJSModule(RCTEventEmitter.class).receiveEvent(getId(), "onPictureTaken", event);
-            Log.d("RCTNodeCameraView", "TakePhoto4");
+                Log.d("RCTNodeCameraView", "TakePhoto3");
+                WritableMap event = Arguments.createMap();
+                event.putString("fileName", fileName);
+                event.putInt("width", bitmap.getWidth());
+                event.putInt("height", bitmap.getHeight());
+                Log.d("RCTNodeCameraView", "TakePhoto4");
+                ((ThemedReactContext) getContext()).getJSModule(RCTEventEmitter.class).receiveEvent(getId(), "onPictureTaken", event);
+                Log.d("RCTNodeCameraView", "TakePhoto4");
             }
             
             @Override
             public void onError(String error) {
-            Log.d("RCTNodeCameraView", error);
+                Log.d("RCTNodeCameraView", error);
             }
         });
-        }
     }
+}
   
 
     public void setOutputUrl(String url) {

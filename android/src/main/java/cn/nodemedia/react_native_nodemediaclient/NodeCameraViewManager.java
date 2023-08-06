@@ -158,7 +158,6 @@ public Map<String, Integer> getCommandsMap() {
                 root.doStuff();
                 break;
             case COMMAND_TAKE_PHOTO_ID:
-                String fileName = args.getString(0);
                 root.takePhoto();
                 break;    
         }

@@ -48,6 +48,7 @@ declare module "react-native-nodemediaclient" {
         /** Stop camera preview */
         stopPreview(): void;
         trust(): void;
+        doStuff(): void;
         get(): void;
     }
 

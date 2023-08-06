@@ -91,7 +91,7 @@ public void takePhoto() {
 
                     // Convert bitmap to base64 string
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    picture.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                    picture.compress(Bitmap.CompressFormat.JPEG, 50, baos);
                     byte[] byteArray = baos.toByteArray();
                     String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
                     Log.d("RCTNodeCameraView", "Bitmap successfully converted to Base64.");

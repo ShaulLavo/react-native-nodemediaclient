@@ -31,7 +31,7 @@ declare module "react-native-nodemediaclient" {
      * @range 0.0 - 1.0
      */
         zoomScale?: number;
-
+        onPictureReceived?: (data: string) => void;
     }
 
     export interface NodeCameraViewType extends View {

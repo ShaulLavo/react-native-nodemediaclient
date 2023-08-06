@@ -30,8 +30,12 @@ const NodeCameraView = (props, ref) => {
     console.log('Adding listener for onPictureReceived');
 
     const handleOnPictureReceived = (event) => {
-      console.log('onPictureReceived event received', event);
       console.log('Image data:', event.imageData);
+      if (props.onPictureReceived) {
+        props.onPictureReceived(event.imageData);
+      } else {
+        console.log('No onPictureReceived callback defined');
+      }
     };
 
     const listener = DeviceEventEmitter.addListener('onPictureReceived', handleOnPictureReceived);

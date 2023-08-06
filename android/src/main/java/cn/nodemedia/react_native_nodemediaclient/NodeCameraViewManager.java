@@ -38,6 +38,8 @@ public class NodeCameraViewManager extends ViewGroupManager<RCTNodeCameraView> {
     private static final String COMMAND_DOSTUFF_NAME = "doStuff";
     private static final int COMMAND_TAKE_PHOTO_ID = 7;
     private static final String COMMAND_TAKE_PHOTO_NAME = "takePhoto";
+    private static final int COMMAND_TOGGLE_MUTE_ID = 8;
+    private static final String COMMAND_TOGGLE_MUTE_NAME = "toggleMute";
 
     @Override
     public String getName() {
@@ -129,6 +131,7 @@ public class NodeCameraViewManager extends ViewGroupManager<RCTNodeCameraView> {
                 .put(COMMAND_SWITCH_FLASH_NAME, COMMAND_SWITCH_FLASH_ID)
                 .put(COMMAND_DOSTUFF_NAME, COMMAND_DOSTUFF_ID)
                 .put(COMMAND_TAKE_PHOTO_NAME, COMMAND_TAKE_PHOTO_ID)
+                .put(COMMAND_TOGGLE_MUTE_NAME, COMMAND_TOGGLE_MUTE_ID)
                 .build();
     }
 
@@ -160,6 +163,9 @@ public class NodeCameraViewManager extends ViewGroupManager<RCTNodeCameraView> {
             case COMMAND_TAKE_PHOTO_ID:
                 root.takePhoto();
                 break;    
+            case COMMAND_TOGGLE_MUTE_ID:  
+                root.toggleMute();
+                break;
         }
     }
 }

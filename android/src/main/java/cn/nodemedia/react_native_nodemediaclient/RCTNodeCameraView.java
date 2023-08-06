@@ -55,7 +55,7 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
     private boolean dynamicRateEnable = true;
     private int smoothSkinLevel = 0;
     private float zoomScale = 0;
-
+    private boolean isMuted = false;
 
     public RCTNodeCameraView(@NonNull ThemedReactContext context) {
         super(context);
@@ -76,42 +76,52 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
                         event);
             }
         });
-
     }
 
-public void takePhoto() { 
-    Log.d("RCTNodeCameraView", "TakePhoto");
-    if (mNodePublisher != null) {
-        Log.d("RCTNodeCameraView", "TakePhoto2");
-        mNodePublisher.capturePicture(new NodePublisher.CapturePictureListener() {
-            @Override
-            public void onCaptureCallback(Bitmap picture) {
-                try {
-                    Log.d("RCTNodeCameraView", "onSuccess triggered.");
-
-                    // Convert bitmap to base64 string
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    picture.compress(Bitmap.CompressFormat.JPEG, 50, baos);
-                    byte[] byteArray = baos.toByteArray();
-                    String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                    Log.d("RCTNodeCameraView", "Bitmap successfully converted to Base64.");
-
-                    // Send this encoded string to React Native via direct emission
-                    WritableMap params = Arguments.createMap();
-                    params.putString("imageData", encoded);
-                    ReactContext reactContext = (ReactContext) getContext();
-                    reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                                .emit("onPictureReceived", params);
-                    Log.d("RCTNodeCameraView", "Base64 string sent to React Native via direct emission.");
-                } catch (Exception e) {
-                    Log.e("RCTNodeCameraView", "Error in onCaptureCallback: ", e);
+    public void takePhoto() { 
+        Log.d("RCTNodeCameraView", "TakePhoto");
+        if (mNodePublisher != null) {
+            Log.d("RCTNodeCameraView", "TakePhoto2");
+            mNodePublisher.capturePicture(new NodePublisher.CapturePictureListener() {
+                @Override
+                public void onCaptureCallback(Bitmap picture) {
+                    try {
+                        Log.d("RCTNodeCameraView", "onSuccess triggered.");
+                        // Convert bitmap to base64 string
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        picture.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+                        byte[] byteArray = baos.toByteArray();
+                        String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        Log.d("RCTNodeCameraView", "Bitmap successfully converted to Base64.");
+                        // Send this encoded string to React Native via direct emission
+                        WritableMap params = Arguments.createMap();
+                        params.putString("imageData", encoded);
+                        ReactContext reactContext = (ReactContext) getContext();
+                        reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                    .emit("onPictureReceived", params);
+                        Log.d("RCTNodeCameraView", "Base64 string sent to React Native via direct emission.");
+                    } catch (Exception e) {
+                        Log.e("RCTNodeCameraView", "Error in onCaptureCallback: ", e);
+                    }
                 }
-            }
-        });
+            });
+        }
+    }
+
+  public void toggleMute() {
+    try {
+        if (isMuted) {
+            mNodePublisher.unmuteMicrophone();
+            Log.d("RCTNodeCameraView", "Microphone unmuted");
+        } else {
+            mNodePublisher.muteMicrophone();
+            Log.d("RCTNodeCameraView", "Microphone muted");
+        }
+        isMuted = !isMuted; // Toggle the boolean value
+    } catch (Exception e) {
+        Log.e("RCTNodeCameraView", "Error toggling microphone mute state", e);
     }
 }
-
-
 
     public void setOutputUrl(String url) {
         mNodePublisher.setOutputUrl(url);

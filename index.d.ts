@@ -49,6 +49,7 @@ declare module "react-native-nodemediaclient" {
         stopPreview(): void;
         trust(): void;
         takePhoto(): void;
+        toggleMute(): void;
         doStuff(): void;
         get(): void;
     }

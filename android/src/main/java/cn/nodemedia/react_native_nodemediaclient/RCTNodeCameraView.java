@@ -80,18 +80,18 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
     }
 
 
-    public void takePhoto(final String fileName) {
+public void takePhoto(final String fileName) {
     Log.d("RCTNodeCameraView", "TakePhoto");
-    if (textureView.isAvailable() && mNodePublisher != null) {
+    if (mNodePublisher != null) {
         Log.d("RCTNodeCameraView", "TakePhoto2");
-        nodePublisher.capturePicture(new NodePublisher.CapturePictureListener() {
+        mNodePublisher.capturePicture(new NodePublisher.CapturePictureListener() {
             @Override
             public void onCaptureCallback(Bitmap picture) {
                 Log.d("RCTNodeCameraView", "onSuccess triggered.");
 
                 // Convert bitmap to base64 string
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                picture.compress(Bitmap.CompressFormat.PNG, 100, baos); // corrected from bitmap to picture
+                picture.compress(Bitmap.CompressFormat.PNG, 100, baos);
                 byte[] byteArray = baos.toByteArray();
                 String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
                 Log.d("RCTNodeCameraView", "Bitmap successfully converted to Base64.");
@@ -103,7 +103,7 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
                 reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
                         getId(),
                         "onPictureReceived",
-                        params); // corrected from event to params
+                        params);
                 Log.d("RCTNodeCameraView", "Base64 string sent to React Native via bridge.");
             }
         });

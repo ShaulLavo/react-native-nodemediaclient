@@ -19,22 +19,44 @@ const NodeCameraView = (props, ref) => {
       );
   };
 
+  takePhoto = () => {
+    UIManager.dispatchViewManagerCommand(
+      findNodeHandle(videoRef.current),
+      UIManager.getViewManagerConfig('RCTNodeCamera')?.Commands?.takePhoto,
+      null,
+    );
+  };
   useEffect(() => {
-    console.log('Adding listener for doStuffEvent'); // Log when adding the listener
+    console.log('Adding listener for onPictureReceived');
+
+    const handleOnPictureReceived = (event) => {
+      console.log('onPictureReceived event received', event);
+      console.log('Image data:', event.imageData);
+    };
+
+    const listener = DeviceEventEmitter.addListener('onPictureReceived', handleOnPictureReceived);
+
+    return () => {
+      console.log('Removing listener for onPictureReceived');
+      listener.remove();
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log('Adding listener for doStuffEvent');
 
     const handleDoStuffEvent = (event) => {
-      console.log('doStuffEvent received', event); // Log when the event is received
-      console.log('Result from doStuff:', event.result); // Log the result from doStuff
+      console.log('doStuffEvent received', event);
+      console.log('Result from doStuff:', event.result);
     };
 
     const listener = DeviceEventEmitter.addListener('doStuffEvent', handleDoStuffEvent);
 
     return () => {
-      console.log('Removing listener for doStuffEvent'); // Log when removing the listener
+      console.log('Removing listener for doStuffEvent');
       listener.remove();
     };
   }, []);
-
   const _onChange = (event) => {
     if (!props.onStatus) {
       return;
@@ -110,13 +132,6 @@ const NodeCameraView = (props, ref) => {
       );
   };
 
-  takePhoto = () => {
-    UIManager.dispatchViewManagerCommand(
-      findNodeHandle(videoRef.current),
-      UIManager.getViewManagerConfig('RCTNodeCamera')?.Commands?.takePhoto,
-      null,
-    );
-  };
 
   React.useImperativeHandle(
     ref,

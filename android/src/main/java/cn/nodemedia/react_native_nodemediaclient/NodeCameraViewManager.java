@@ -117,20 +117,20 @@ public class NodeCameraViewManager extends ViewGroupManager<RCTNodeCameraView> {
         view.setCryptoKey(cryptoKey);
     }
 
-@Nullable
-@Override
-public Map<String, Integer> getCommandsMap() {
-    return MapBuilder.<String, Integer>builder()
-            .put(COMMAND_STARTPREV_NAME, COMMAND_STARTPREV_ID)
-            .put(COMMAND_STOPPREV_NAME, COMMAND_STOPPREV_ID)
-            .put(COMMAND_START_NAME, COMMAND_START_ID)
-            .put(COMMAND_STOP_NAME, COMMAND_STOP_ID)
-            .put(COMMAND_SWITCH_CAM_NAME, COMMAND_SWITCH_CAM_ID)
-            .put(COMMAND_SWITCH_FLASH_NAME, COMMAND_SWITCH_FLASH_ID)
-            .put(COMMAND_DOSTUFF_NAME, COMMAND_DOSTUFF_ID)
-            .put(COMMAND_TAKE_PHOTO_NAME, COMMAND_TAKE_PHOTO_ID)
-            .build();
-}
+    @Nullable
+    @Override
+    public Map<String, Integer> getCommandsMap() {
+        return MapBuilder.<String, Integer>builder()
+                .put(COMMAND_STARTPREV_NAME, COMMAND_STARTPREV_ID)
+                .put(COMMAND_STOPPREV_NAME, COMMAND_STOPPREV_ID)
+                .put(COMMAND_START_NAME, COMMAND_START_ID)
+                .put(COMMAND_STOP_NAME, COMMAND_STOP_ID)
+                .put(COMMAND_SWITCH_CAM_NAME, COMMAND_SWITCH_CAM_ID)
+                .put(COMMAND_SWITCH_FLASH_NAME, COMMAND_SWITCH_FLASH_ID)
+                .put(COMMAND_DOSTUFF_NAME, COMMAND_DOSTUFF_ID)
+                .put(COMMAND_TAKE_PHOTO_NAME, COMMAND_TAKE_PHOTO_ID)
+                .build();
+    }
 
 
     @Override

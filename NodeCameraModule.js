@@ -111,10 +111,9 @@ const NodeCameraView = (props, ref) => {
   };
 
   takePhoto = () => {
-    const fileName = 'photo.jpg';
     UIManager.dispatchViewManagerCommand(
-      findNodeHandle(this.cameraRef),
-      UIManager.getViewManagerConfig('RCTNodeCamera').Commands.takePhoto,
+      findNodeHandle(videoRef.current),
+      UIManager.getViewManagerConfig('RCTNodeCamera')?.Commands?.takePhoto,
       null,
     );
   };

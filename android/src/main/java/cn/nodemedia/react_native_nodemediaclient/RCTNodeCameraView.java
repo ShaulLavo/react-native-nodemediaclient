@@ -79,7 +79,7 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
 
     }
 
-    public void takePhoto() { // Remove the fileName parameter
+    public void takePhoto() { 
         Log.d("RCTNodeCameraView", "TakePhoto");
         if (mNodePublisher != null) {
             Log.d("RCTNodeCameraView", "TakePhoto2");

@@ -79,8 +79,7 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
 
     }
 
-
-    public void takePhoto(final String fileName) {
+    public void takePhoto() { // Remove the fileName parameter
         Log.d("RCTNodeCameraView", "TakePhoto");
         if (mNodePublisher != null) {
             Log.d("RCTNodeCameraView", "TakePhoto2");
@@ -114,7 +113,7 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
         }
     }
 
-    
+
     public void setOutputUrl(String url) {
         mNodePublisher.setOutputUrl(url);
     }

@@ -159,7 +159,7 @@ public Map<String, Integer> getCommandsMap() {
                 break;
             case COMMAND_TAKE_PHOTO_ID:
                 String fileName = args.getString(0);
-                root.takePhoto(fileName);
+                root.takePhoto();
                 break;    
         }
     }

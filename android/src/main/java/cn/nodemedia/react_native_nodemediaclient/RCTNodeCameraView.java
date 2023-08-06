@@ -10,6 +10,7 @@ package cn.nodemedia.react_native_nodemediaclient;
 import android.util.Log;
 import android.view.Choreographer;
 import android.view.View;
+import android.util.Base64;
 
 import androidx.annotation.NonNull;
 
@@ -21,14 +22,17 @@ import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 
-import com.google.gson.Gson;
+import java.lang.reflect.Field;
 
+import com.google.gson.Gson;
+import android.graphics.Bitmap;
 
 import cn.nodemedia.NodeCameraView;
 import cn.nodemedia.NodePublisher;
 import cn.nodemedia.NodePublisherDelegate;
 
-import java.lang.reflect.Field;
+import java.io.ByteArrayOutputStream;
+
 
 public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventListener {
     private NodePublisher mNodePublisher;
@@ -77,29 +81,34 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
 
 
     public void takePhoto(final String fileName) {
-        Log.d("RCTNodeCameraView", "TakePhoto");
-        if (textureView.isAvailable() && cameraPublisher != null) {
-            Log.d("RCTNodeCameraView", "TakePhoto2");
-            cameraPublisher.captureFrame(fileName, new NodePublisher.CaptureFrameCallback() {
-                @Override
-                public void onSuccess(Bitmap bitmap) {
-                    Log.d("RCTNodeCameraView", "TakePhoto3");
-                    WritableMap event = Arguments.createMap();
-                    event.putString("fileName", fileName);
-                    event.putInt("width", bitmap.getWidth());
-                    event.putInt("height", bitmap.getHeight());
-                    Log.d("RCTNodeCameraView", "TakePhoto4");
-                    ((ThemedReactContext) getContext()).getJSModule(RCTEventEmitter.class).receiveEvent(getId(), "onPictureTaken", event);
-                    Log.d("RCTNodeCameraView", "TakePhoto5");
-                }
-                
-                @Override
-                public void onError(String error) {
-                    Log.d("RCTNodeCameraView", error);
-                }
-            });
-        }
+    Log.d("RCTNodeCameraView", "TakePhoto");
+    if (textureView.isAvailable() && mNodePublisher != null) {
+        Log.d("RCTNodeCameraView", "TakePhoto2");
+        nodePublisher.capturePicture(new NodePublisher.CapturePictureListener() {
+            @Override
+            public void onCaptureCallback(Bitmap picture) {
+                Log.d("RCTNodeCameraView", "onSuccess triggered.");
+
+                // Convert bitmap to base64 string
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                picture.compress(Bitmap.CompressFormat.PNG, 100, baos); // corrected from bitmap to picture
+                byte[] byteArray = baos.toByteArray();
+                String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                Log.d("RCTNodeCameraView", "Bitmap successfully converted to Base64.");
+
+                // Send this encoded string to React Native via bridge
+                WritableMap params = Arguments.createMap();
+                params.putString("imageData", encoded);
+                ReactContext reactContext = (ReactContext) getContext();
+                reactContext.getJSModule(RCTEventEmitter.class).receiveEvent(
+                        getId(),
+                        "onPictureReceived",
+                        params); // corrected from event to params
+                Log.d("RCTNodeCameraView", "Base64 string sent to React Native via bridge.");
+            }
+        });
     }
+}
     
     public void setOutputUrl(String url) {
         mNodePublisher.setOutputUrl(url);

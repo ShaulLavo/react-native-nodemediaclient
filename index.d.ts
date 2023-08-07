@@ -3,197 +3,240 @@ declare module "react-native-nodemediaclient" {
     import { View, ViewProps } from "react-native";
 
     export interface NodeCameraViewProps extends ViewProps {
+        /** @description Reference to the component */
         ref?: (ref: NodeCameraViewType) => any;
-        /**
-         * RTMP endpoint
-         */
+
+        /** @description RTMP stream endpoint */
         outputUrl: string;
-        /** Stream Camera configs */
+
+        /** @description Camera settings */
         camera?: CameraConfig;
-        /** Stream audio configs */
+
+        /** @description Audio settings */
         audio?: AudioConfig;
-        /** Stream Video configs */
+
+        /** @description Video settings */
         video?: VideoConfig;
-        /** Enable preview of camera */
+
+        /** 
+         * @description Autostart camera preview
+         * @default false 
+         */
         autopreview?: boolean;
-        /** Enable denoise for better quality. It increase CPU and memory usage */
+
+        /** 
+         * @description Enable denoise for improved quality 
+         */
         denoise?: boolean;
-        /** Enable dynamic bitrate for auto increase or decreate depending of connection */
+
+        /** 
+         * @description Auto adjust bitrate 
+         */
         dynamicRateEnable?: boolean;
-        /** Level of smoothing skin 0 is disabled
-         * @max 5
+
+        /** 
+         * @description Skin smoothness level 
+         * @range 0-5 
          */
         smoothSkinLevel?: number;
-        cryptoKey?: string;
-        /** Called when streaming status has changed */
-        onStatus?(code?: OutputStreamStatus, status?: string): void;
-        /** 
-     * @range 0.0 - 1.0
-     */
-        zoomScale?: number;
-        onPictureReceived?: (data: string) => void;
-    }
 
+        /** 
+         * @description Key for stream encryption 
+         */
+        cryptoKey?: string;
+
+        /** 
+         * @description Callback for stream status changes 
+         */
+        onStatus?(code?: OutputStreamStatus, status?: string): void;
+
+        /** 
+         * @description Camera zoom level
+         * @range 0.0-1.0 
+         */
+        zoomScale?: number;
+
+        /** 
+         * @description Callback when a picture is taken 
+         */
+        onPictureReceived?: (data: string) => void;
+
+        /** 
+         * @description Is microphone muted?
+         * @default false 
+         */
+        isMuted?: boolean;
+    }
     export interface NodeCameraViewType extends View {
-        /** Stop streaming */
+        /** 
+         * @description Stop the current stream 
+         */
         stop(): void;
-        /** Start streaming */
+
+        /** 
+         * @description Begin streaming 
+         */
         start(): void;
-        /** Switch front or back camera */
+
+        /** 
+         * @description Switch between front and back camera 
+         */
         switchCamera(): void;
-        /** Enable or disable flash */
+
+        /** 
+         * @description Toggle the flash 
+         * @param enable If true, flash will be enabled. If false or omitted, it'll be disabled. 
+         */
         flashEnable(enable?: boolean): void;
-        /** Start camera preview */
+
+        /** 
+         * @description Start showing the camera's view 
+         */
         startPreview(): void;
-        /** Stop camera preview */
+
+        /** 
+         * @description End the camera's preview 
+         */
         stopPreview(): void;
+
+        /** 
+         * @description Trust the current settings or source (exact functionality to be defined) 
+         */
         trust(): void;
+
+        /** 
+         * @description Capture a photo 
+         */
         takePhoto(): void;
+
+        /** 
+         * @description Mute or unmute the microphone 
+         */
         toggleMute(): void;
+
+        /** 
+         * @description Execute additional functionality (exact details to be defined) 
+         */
         doStuff(): void;
+
+        /** 
+         * @description Retrieve current settings or status (exact details to be defined) 
+         */
         get(): void;
     }
 
     export interface VideoConfig {
         /**
-         * Video sizes and Aspect Ratio
+         * @description Video sizes and Aspect Ratio
          * @requires VideoAspectRatios
          */
         preset?: AR16X9 | AR4X3 | AR1X1;
 
-        /** This define how much bytes will be send for the stream video
-         * higher values have better quality but requires a better internet connection
+        /** 
+         * @description Defines video stream's byte rate 
          */
         bitrate?: number;
 
-        /** Video quality profiles */
+        /** 
+         * @description Video quality selection
+         */
         profile?: VideoProfiles;
 
-        /** frames per second */
+        /** 
+         * @description Video frame rate 
+         */
         fps?: number;
 
-        /** Define if front camera should mirror image for preview */
+        /** 
+         * @description Should the front camera mirror the preview?
+         * @default false
+         */
         videoFrontMirror?: boolean;
     }
 
     export interface AudioConfig {
-        /** This define how much bytes will be send for the stream video
-         * higher values have better quality but requires a better internet connection
+        /** 
+         * @description Defines audio stream's byte rate
          */
         bitrate?: number;
 
-        /** Audio Quality profiles */
+        /** 
+         * @description Audio quality selection
+         */
         profile?: AudioProfiles;
 
-        /** @range 32000 - 48000 */
+        /** 
+         * @description Audio sample rate 
+         * @range 32000 - 48000
+         */
         samplerate?: number;
     }
 
     export interface CameraConfig {
-        /** define front or back camera used to stream */
+        /** 
+         * @description Defines the camera for streaming
+         */
         cameraId: CameraId;
 
-        /** Define if front camera should mirror image for preview */
+        /** 
+         * @description Should the front camera mirror the preview?
+         * @default false
+         */
         cameraFrontMirror: boolean;
     }
 
-    /** Cameras */
     export enum CameraId {
         BackCamera = 0,
         FrontCamera = 1,
     }
 
     export enum OutputStreamStatus {
-        /** Connecting stream */
         Connecting = 2000,
-
-        /** Start Publishing */
         Start = 2001,
-
-        /** Connection Failed */
         Failed = 2002,
-
-        /** Connection Closed */
         Closed = 2004,
-
-        /** Publish network congestion */
         Congestion = 2100,
         Unobstructed = 2101,
-    }
-    /** Video sizes for 16x9 aspect ratio
-     * @example 1080p is 1920x1080
-     */
-    export enum AR16X9 {
-        "270p" = 0,
-        "360p" = 1,
-        "480p" = 2,
-        "540p" = 3,
-        "720p" = 4,
-        "1080p" = 5,
-    }
-    /** Video sizes for 4x3 aspect ratio
-     * @example 1080p is 1440x1080
-     */
-    export enum AR4X3 {
-        "270p" = 10,
-        "360p" = 11,
-        "480p" = 12,
-        "540p" = 13,
-        "720p" = 14,
-        "1080p" = 15,
-    }
-    /** Video sizes for 1x1 aspect ratio
-     * @example 1080p is 1080x1080
-     */
-    export enum AR1X1 {
-        "270p" = 20,
-        "360p" = 21,
-        "480p" = 22,
-        "540p" = 23,
-        "720p" = 24,
-        "1080p" = 25,
-    }
-
-    /** Audio Quality profiles */
-    export enum AudioProfiles {
-        /** Low Complexity Advanced Audio Coding */
-        LCAAC = 0,
-        /** High-Efficiency Advanced Audio Coding (better) */
-        HEAAC = 1,
-    }
-
-    export enum VideoProfiles {
-        /** low quality */
-        BASELINE = 0,
-        /** normal quality */
-        MAIN = 1,
-        /** high quality */
-        HIGH = 2,
-    }
-
-    export enum InputStreamStatus {
-        Connecting = 1000,
-        Connected = 1001,
-        Reconnection = 1003,
-        Buffering = 1101,
-        BufferFull = 1102,
-        Resolution = 1104,
-        None = 0,
     }
 
     export interface NodePlayerViewProps extends ViewProps {
         ref: any;
         inputUrl: string;
+
+        /** 
+         * @description Initial buffering duration 
+         */
         bufferTime?: number;
+
+        /** 
+         * @description Maximum buffering duration 
+         */
         maxBufferTime?: number;
+
+        /** 
+         * @description Should the video play on load?
+         * @default false
+         */
         autoplay?: boolean;
+
+        /** 
+         * @description Enable or disable audio 
+         * @default true
+         */
         audioEnable?: boolean;
+
         scaleMode?: "ScaleToFill" | "ScaleAspectFit" | "ScaleAspectFill";
         renderType?: "SURFACEVIEW" | "TEXTUREVIEW";
         cryptoKey?: string;
+
         onStatus?(code?: InputStreamStatus, status?: string): void;
     }
 
+    export interface NodePlayerViewType extends View {
+        pause(): void;
+        stop(): void;
+        start(): void;
+    }
     export interface NodePlayerViewType extends View {
         /** Pause video */
         pause(): void;

@@ -24,7 +24,6 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 import java.lang.reflect.Field;
 
-import com.google.gson.Gson;
 import android.graphics.Bitmap;
 
 import cn.nodemedia.NodeCameraView;
@@ -108,20 +107,23 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
         }
     }
 
-  public void toggleMute() {
-    try {
-        if (isMuted) {
-            mNodePublisher.unmuteMicrophone();
-            Log.d("RCTNodeCameraView", "Microphone unmuted");
-        } else {
-            mNodePublisher.muteMicrophone();
-            Log.d("RCTNodeCameraView", "Microphone muted");
+    public void setMute(boolean mute) {
+        try {
+            if (mute && !isMuted) { // If we want to mute and it's currently unmuted
+                mNodePublisher.muteMicrophone();
+                Log.d("RCTNodeCameraView", "Microphone muted");
+                isMuted = true;
+            } else if (!mute && isMuted) { // If we want to unmute and it's currently muted
+                mNodePublisher.unmuteMicrophone();
+                Log.d("RCTNodeCameraView", "Microphone unmuted");
+                isMuted = false;
+            }
+        } catch (Exception e) {
+            Log.e("RCTNodeCameraView", "Error setting microphone mute state", e);
         }
-        isMuted = !isMuted; // Toggle the boolean value
-    } catch (Exception e) {
-        Log.e("RCTNodeCameraView", "Error toggling microphone mute state", e);
     }
-}
+
+    
 
     public void setOutputUrl(String url) {
         mNodePublisher.setOutputUrl(url);

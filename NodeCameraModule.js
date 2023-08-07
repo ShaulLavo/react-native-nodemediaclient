@@ -100,14 +100,6 @@ const NodeCameraView = (props, ref) => {
       );
   };
 
-  const toggleMute = () => {
-    if (videoRef.current)
-      UIManager.dispatchViewManagerCommand(
-        findNodeHandle(videoRef.current),
-        UIManager.getViewManagerConfig("RCTNodeCamera")?.Commands?.toggleMute,
-        null  // No arguments needed for toggleMute
-      );
-  };
 
   const startPreview = () => {
     if (videoRef.current)
@@ -158,10 +150,9 @@ const NodeCameraView = (props, ref) => {
       trust,
       get,
       doStuff,
-      takePhoto,
-      toggleMute
+      takePhoto
     }),
-    [switchCamera, stop, start, flashEnable, startPreview, stopPreview, get, doStuff, takePhoto, toggleMute]
+    [switchCamera, stop, start, flashEnable, startPreview, stopPreview, get, doStuff, takePhoto]
   );
 
   React.useEffect(() => {

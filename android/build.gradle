@@ -20,6 +20,17 @@ android {
     }
 
 }
+task refreshDependenciesAlways {
+    doFirst {
+        configurations.all {
+            resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+        }
+    }
+}
+
+tasks.getByPath(':app:assembleDebug').dependsOn refreshDependenciesAlways
+tasks.getByPath(':app:assembleRelease').dependsOn refreshDependenciesAlways
+
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -28,8 +39,3 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
 }
 
-
-// Added this section to refresh cache
-configurations.all {
-    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-}

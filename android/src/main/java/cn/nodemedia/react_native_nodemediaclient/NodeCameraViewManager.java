@@ -120,7 +120,7 @@ public class NodeCameraViewManager extends ViewGroupManager<RCTNodeCameraView> {
 
     @ReactProp(name = "isMuted")
     public void setIsMuted(RCTNodeCameraView view, boolean isMuted) {
-        view.setMuted(isMuted);
+        view.setMute(isMuted);
     }
 
     @Nullable

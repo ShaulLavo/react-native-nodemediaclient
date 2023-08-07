@@ -27,3 +27,9 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:28.0.1'
     implementation "com.facebook.react:react-native:+"  // From node_modules
 }
+
+
+// Added this section to refresh cache
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}

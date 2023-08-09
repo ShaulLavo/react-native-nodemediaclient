@@ -198,7 +198,66 @@ declare module "react-native-nodemediaclient" {
         Congestion = 2100,
         Unobstructed = 2101,
     }
+    /** Video sizes for 16x9 aspect ratio
+       * @example 1080p is 1920x1080
+       */
+    export enum AR16X9 {
+        "270p" = 0,
+        "360p" = 1,
+        "480p" = 2,
+        "540p" = 3,
+        "720p" = 4,
+        "1080p" = 5,
+    }
+    /** Video sizes for 4x3 aspect ratio
+     * @example 1080p is 1440x1080
+     */
+    export enum AR4X3 {
+        "270p" = 10,
+        "360p" = 11,
+        "480p" = 12,
+        "540p" = 13,
+        "720p" = 14,
+        "1080p" = 15,
+    }
+    /** Video sizes for 1x1 aspect ratio
+     * @example 1080p is 1080x1080
+     */
+    export enum AR1X1 {
+        "270p" = 20,
+        "360p" = 21,
+        "480p" = 22,
+        "540p" = 23,
+        "720p" = 24,
+        "1080p" = 25,
+    }
 
+    /** Audio Quality profiles */
+    export enum AudioProfiles {
+        /** Low Complexity Advanced Audio Coding */
+        LCAAC = 0,
+        /** High-Efficiency Advanced Audio Coding (better) */
+        HEAAC = 1,
+    }
+
+    export enum VideoProfiles {
+        /** low quality */
+        BASELINE = 0,
+        /** normal quality */
+        MAIN = 1,
+        /** high quality */
+        HIGH = 2,
+    }
+
+    export enum InputStreamStatus {
+        Connecting = 1000,
+        Connected = 1001,
+        Reconnection = 1003,
+        Buffering = 1101,
+        BufferFull = 1102,
+        Resolution = 1104,
+        None = 0,
+    }
     export interface NodePlayerViewProps extends ViewProps {
         ref: any;
         inputUrl: string;

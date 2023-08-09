@@ -22,16 +22,7 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 
-task refreshDependenciesAlways {
-    doFirst {
-        configurations.all {
-            resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-        }
-    }
-}
 
-tasks.getByPath(':app:assembleDebug').dependsOn refreshDependenciesAlways
-tasks.getByPath(':app:assembleRelease').dependsOn refreshDependenciesAlways
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])

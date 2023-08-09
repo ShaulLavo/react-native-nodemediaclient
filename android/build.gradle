@@ -3,13 +3,11 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion 30
 
-
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
     }
 
     buildTypes {
@@ -18,8 +16,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 }
+
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
 task refreshDependenciesAlways {
     doFirst {
         configurations.all {
@@ -31,11 +33,9 @@ task refreshDependenciesAlways {
 tasks.getByPath(':app:assembleDebug').dependsOn refreshDependenciesAlways
 tasks.getByPath(':app:assembleRelease').dependsOn refreshDependenciesAlways
 
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.github.ShaulLavo:NodeMediaClient-Android:master'
+    implementation 'com.github.ShaulLavo:NodeMediaClient-Android:38ba1b9922e571fddeaaf928bb86857424994e58'
     implementation 'com.android.support:appcompat-v7:28.0.1'
     implementation "com.facebook.react:react-native:+"  // From node_modules
 }
-

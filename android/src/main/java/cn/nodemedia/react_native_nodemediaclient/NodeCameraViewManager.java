@@ -36,10 +36,11 @@ public class NodeCameraViewManager extends ViewGroupManager<RCTNodeCameraView> {
     private static final String COMMAND_SWITCH_FLASH_NAME = "flashEnable";
     private static final int COMMAND_DOSTUFF_ID = 6;
     private static final String COMMAND_DOSTUFF_NAME = "doStuff";
-    private static final int COMMAND_TAKE_PHOTO_ID = 7;
-    private static final String COMMAND_TAKE_PHOTO_NAME = "takePhotoThroughBridge";
-    private static final int COMMAND_TAKE_PHOTO_ID = 8;
-    private static final String COMMAND_TAKE_PHOTO_NAME = "takePhotoAndCache";
+    private static final int COMMAND_TAKE_PHOTO_THROUGH_BRIDGE_ID = 7;
+    private static final String COMMAND_TAKE_PHOTO_THROUGH_BRIDGE_NAME = "takePhotoThroughBridge";
+    private static final int COMMAND_TAKE_PHOTO_AND_CACHE_ID = 8;
+    private static final String COMMAND_TAKE_PHOTO_AND_CACHE_NAME = "takePhotoAndCache";
+
 ;
 
     @Override
@@ -136,7 +137,8 @@ public class NodeCameraViewManager extends ViewGroupManager<RCTNodeCameraView> {
                 .put(COMMAND_SWITCH_CAM_NAME, COMMAND_SWITCH_CAM_ID)
                 .put(COMMAND_SWITCH_FLASH_NAME, COMMAND_SWITCH_FLASH_ID)
                 .put(COMMAND_DOSTUFF_NAME, COMMAND_DOSTUFF_ID)
-                .put(COMMAND_TAKE_PHOTO_NAME, COMMAND_TAKE_PHOTO_ID)
+                .put(COMMAND_TAKE_PHOTO_THROUGH_BRIDGE_NAME, COMMAND_TAKE_PHOTO_THROUGH_BRIDGE_ID)
+                .put(COMMAND_TAKE_PHOTO_AND_CACHE_NAME, COMMAND_TAKE_PHOTO_AND_CACHE_ID)
                 .build();
     }
 
@@ -164,9 +166,12 @@ public class NodeCameraViewManager extends ViewGroupManager<RCTNodeCameraView> {
             case COMMAND_DOSTUFF_ID:
                 root.doStuff();
                 break;
-            case COMMAND_TAKE_PHOTO_ID:
-                root.takePhotoAndCache(); // Updated method name
-                break;    
+            case COMMAND_TAKE_PHOTO_THROUGH_BRIDGE_ID:
+                root.takePhotoThroughBridge();
+                break;
+             case COMMAND_TAKE_PHOTO_AND_CACHE_ID:
+                root.takePhotoAndCache();
+                break; 
         }
     }
 

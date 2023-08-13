@@ -105,9 +105,14 @@ declare module "react-native-nodemediaclient" {
         trust(): void;
 
         /** 
-         * @description Capture a photo 
+        * @description Capture a photo and send it through the bridge
          */
-        takePhoto(): void;
+        takePhotoThroughBridge(): void;
+        /** 
+         * @description Capture a photo and save it to cache, then send the location through the bridge
+         */
+        takePhotoAndCache(): void;
+
 
         /** 
          * @description Mute or unmute the microphone 

@@ -7,6 +7,10 @@
 
 package cn.nodemedia.react_native_nodemediaclient;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.lang.reflect.Field;
+
 import android.util.Log;
 import android.view.Choreographer;
 import android.view.View;
@@ -72,6 +76,36 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
                         event);
             }
         });
+    }
+
+    public void takePhotoThroughBridge() { 
+        Log.d("RCTNodeCameraView", "TakePhoto");
+        if (mNodePublisher != null) {
+            Log.d("RCTNodeCameraView", "TakePhoto2");
+            mNodePublisher.capturePicture(new NodePublisher.CapturePictureListener() {
+                @Override
+                public void onCaptureCallback(Bitmap picture) {
+                    try {
+                        Log.d("RCTNodeCameraView", "onSuccess triggered.");
+                        // Convert bitmap to base64 string
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        picture.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+                        byte[] byteArray = baos.toByteArray();
+                        String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        Log.d("RCTNodeCameraView", "Bitmap successfully converted to Base64.");
+                        // Send this encoded string to React Native via direct emission
+                        WritableMap params = Arguments.createMap();
+                        params.putString("imageData", encoded);
+                        ReactContext reactContext = (ReactContext) getContext();
+                        reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                                    .emit("onPictureReceived", params);
+                        Log.d("RCTNodeCameraView", "Base64 string sent to React Native via direct emission.");
+                    } catch (Exception e) {
+                        Log.e("RCTNodeCameraView", "Error in onCaptureCallback: ", e);
+                    }
+                }
+            });
+        }
     }
 
     public void takePhotoAndCache() {

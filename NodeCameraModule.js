@@ -19,13 +19,43 @@ const NodeCameraView = (props, ref) => {
       );
   };
 
-  takePhoto = () => {
+  takePhotoAndCache = () => {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(videoRef.current),
-      UIManager.getViewManagerConfig('RCTNodeCamera')?.Commands?.takePhoto,
+      UIManager.getViewManagerConfig('RCTNodeCamera')?.Commands?.takePhotoAndCache,
       null,
     );
   };
+
+  useEffect(() => {
+    console.log('Adding listener for onPictureReceived');
+
+    const handleOnPictureReceived = (event) => {
+      console.log('Image path:', event.imagePath); // Updated to imagePath
+      if (props.onPictureReceived) {
+        props.onPictureReceived(event.imagePath); // Updated to imagePath
+      } else {
+        console.log('No onPictureReceived callback defined');
+      }
+    };
+
+    const listener = DeviceEventEmitter.addListener('onPictureReceived', handleOnPictureReceived);
+
+    return () => {
+      console.log('Removing listener for onPictureReceived');
+      listener.remove();
+    };
+  }, []);
+
+
+  takePhotoThroughBridge = () => {
+    UIManager.dispatchViewManagerCommand(
+      findNodeHandle(videoRef.current),
+      UIManager.getViewManagerConfig('RCTNodeCamera')?.Commands?.takePhotoThroughBridge,
+      null,
+    );
+  };
+
   useEffect(() => {
     console.log('Adding listener for onPictureReceived');
 
@@ -150,9 +180,9 @@ const NodeCameraView = (props, ref) => {
       trust,
       get,
       doStuff,
-      takePhoto
+      takePhotoThroughBridge
     }),
-    [switchCamera, stop, start, flashEnable, startPreview, stopPreview, get, doStuff, takePhoto]
+    [switchCamera, stop, start, flashEnable, startPreview, stopPreview, get, doStuff, takePhotoThroughBridge]
   );
 
   React.useEffect(() => {

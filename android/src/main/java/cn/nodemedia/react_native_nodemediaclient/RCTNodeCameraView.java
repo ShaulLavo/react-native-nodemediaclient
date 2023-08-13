@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Choreographer;
 import android.view.View;
 import android.util.Base64;
+import android.graphics.Bitmap;
 
 import androidx.annotation.NonNull;
 
@@ -21,10 +22,6 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
-
-import java.lang.reflect.Field;
-
-import android.graphics.Bitmap;
 
 import cn.nodemedia.NodeCameraView;
 import cn.nodemedia.NodePublisher;
@@ -77,7 +74,7 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
         });
     }
 
-    public void takePhoto() { 
+    public void takePhotoAndCache() {
         Log.d("RCTNodeCameraView", "TakePhoto");
         if (mNodePublisher != null) {
             Log.d("RCTNodeCameraView", "TakePhoto2");
@@ -86,19 +83,25 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
                 public void onCaptureCallback(Bitmap picture) {
                     try {
                         Log.d("RCTNodeCameraView", "onSuccess triggered.");
-                        // Convert bitmap to base64 string
-                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                        picture.compress(Bitmap.CompressFormat.JPEG, 50, baos);
-                        byte[] byteArray = baos.toByteArray();
-                        String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                        Log.d("RCTNodeCameraView", "Bitmap successfully converted to Base64.");
-                        // Send this encoded string to React Native via direct emission
+                        
+                        // Save the picture to cache
+                        File cachePath = new File(getContext().getCacheDir(), "images");
+                        cachePath.mkdirs(); // Create directories if they don't exist
+                        FileOutputStream stream = new FileOutputStream(cachePath + "/image.jpg");
+                        picture.compress(Bitmap.CompressFormat.JPEG, 50, stream);
+                        stream.close();
+                        
+                        // Get the absolute path of the saved image
+                        String imagePath = cachePath + "/image.jpg";
+                        Log.d("RCTNodeCameraView", "Image successfully saved to cache.");
+                        
+                        // Send the image path to React Native via direct emission
                         WritableMap params = Arguments.createMap();
-                        params.putString("imageData", encoded);
+                        params.putString("imagePath", imagePath);
                         ReactContext reactContext = (ReactContext) getContext();
                         reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                                     .emit("onPictureReceived", params);
-                        Log.d("RCTNodeCameraView", "Base64 string sent to React Native via direct emission.");
+                        Log.d("RCTNodeCameraView", "Image path sent to React Native via direct emission.");
                     } catch (Exception e) {
                         Log.e("RCTNodeCameraView", "Error in onCaptureCallback: ", e);
                     }
@@ -106,6 +109,7 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
             });
         }
     }
+
 
     public void setMute(boolean mute) {
         try {

@@ -37,7 +37,9 @@ public class NodeCameraViewManager extends ViewGroupManager<RCTNodeCameraView> {
     private static final int COMMAND_DOSTUFF_ID = 6;
     private static final String COMMAND_DOSTUFF_NAME = "doStuff";
     private static final int COMMAND_TAKE_PHOTO_ID = 7;
-    private static final String COMMAND_TAKE_PHOTO_NAME = "takePhoto";
+    private static final String COMMAND_TAKE_PHOTO_NAME = "takePhotoThroughBridge";
+    private static final int COMMAND_TAKE_PHOTO_ID = 8;
+    private static final String COMMAND_TAKE_PHOTO_NAME = "takePhotoAndCache";
 ;
 
     @Override
@@ -138,7 +140,6 @@ public class NodeCameraViewManager extends ViewGroupManager<RCTNodeCameraView> {
                 .build();
     }
 
-
     @Override
     public void receiveCommand(RCTNodeCameraView root, int commandId, @Nullable ReadableArray args) {
         switch (commandId) {
@@ -164,8 +165,9 @@ public class NodeCameraViewManager extends ViewGroupManager<RCTNodeCameraView> {
                 root.doStuff();
                 break;
             case COMMAND_TAKE_PHOTO_ID:
-                root.takePhoto();
+                root.takePhotoAndCache(); // Updated method name
                 break;    
         }
     }
+
 }

@@ -28,24 +28,25 @@ const NodeCameraView = (props, ref) => {
   };
 
   useEffect(() => {
-    console.log('Adding listener for onPictureReceived');
+    console.log('Adding listener for onImageDataReceived');
 
-    const handleOnPictureReceived = (event) => {
-      console.log('Image path:', event.imagePath); // Updated to imagePath
-      if (props.onPictureReceived) {
-        props.onPictureReceived(event.imagePath); // Updated to imagePath
+    const handleOnImageDataReceived = (event) => {
+      console.log('Image data:', event.imageData);
+      if (props.onImageDataReceived) {
+        props.onImageDataReceived(event.imageData);
       } else {
-        console.log('No onPictureReceived callback defined');
+        console.log('No onImageDataReceived callback defined');
       }
     };
 
-    const listener = DeviceEventEmitter.addListener('onPictureReceived', handleOnPictureReceived);
+    const listener = DeviceEventEmitter.addListener('onImageDataReceived', handleOnImageDataReceived);
 
     return () => {
-      console.log('Removing listener for onPictureReceived');
+      console.log('Removing listener for onImageDataReceived');
       listener.remove();
     };
   }, []);
+
 
 
   takePhotoThroughBridge = () => {
@@ -57,24 +58,25 @@ const NodeCameraView = (props, ref) => {
   };
 
   useEffect(() => {
-    console.log('Adding listener for onPictureReceived');
+    console.log('Adding listener for onImagePathReceived');
 
-    const handleOnPictureReceived = (event) => {
-      console.log('Image data:', event.imageData);
-      if (props.onPictureReceived) {
-        props.onPictureReceived(event.imageData);
+    const handleOnImagePathReceived = (event) => {
+      console.log('Image path:', event.imagePath);
+      if (props.onImagePathReceived) {
+        props.onImagePathReceived(event.imagePath);
       } else {
-        console.log('No onPictureReceived callback defined');
+        console.log('No onImagePathReceived callback defined');
       }
     };
 
-    const listener = DeviceEventEmitter.addListener('onPictureReceived', handleOnPictureReceived);
+    const listener = DeviceEventEmitter.addListener('onImagePathReceived', handleOnImagePathReceived);
 
     return () => {
-      console.log('Removing listener for onPictureReceived');
+      console.log('Removing listener for onImagePathReceived');
       listener.remove();
     };
   }, []);
+
 
   useEffect(() => {
     console.log('Adding listener for doStuffEvent');
@@ -180,9 +182,10 @@ const NodeCameraView = (props, ref) => {
       trust,
       get,
       doStuff,
-      takePhotoThroughBridge
+      takePhotoThroughBridge,
+      takePhotoAndCache
     }),
-    [switchCamera, stop, start, flashEnable, startPreview, stopPreview, get, doStuff, takePhotoThroughBridge]
+    [switchCamera, stop, start, flashEnable, startPreview, stopPreview, get, doStuff, takePhotoThroughBridge, takePhotoAndCache]
   );
 
   React.useEffect(() => {
@@ -191,7 +194,6 @@ const NodeCameraView = (props, ref) => {
       console.log("stopping camera on unmount");
     };
   }, []);
-  console.log('props', props);
   return <RCTNodeCamera {...props} ref={videoRef} onChange={_onChange} />;
 };
 

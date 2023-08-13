@@ -98,7 +98,7 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
                         params.putString("imageData", encoded);
                         ReactContext reactContext = (ReactContext) getContext();
                         reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                                    .emit("onPictureReceived", params);
+                                    .emit("onImageDataReceived", params);
                         Log.d("RCTNodeCameraView", "Base64 string sent to React Native via direct emission.");
                     } catch (Exception e) {
                         Log.e("RCTNodeCameraView", "Error in onCaptureCallback: ", e);
@@ -134,7 +134,7 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
                         params.putString("imagePath", imagePath);
                         ReactContext reactContext = (ReactContext) getContext();
                         reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                                    .emit("onPictureReceived", params);
+                                    .emit("onImagePathReceived", params);
                         Log.d("RCTNodeCameraView", "Image path sent to React Native via direct emission.");
                     } catch (Exception e) {
                         Log.e("RCTNodeCameraView", "Error in onCaptureCallback: ", e);
